@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#0f766e">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <title>Potts Point Cleaning Checklist</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <div class="account-bar">
+      <a class="account-back" href="../index.html">← Properties</a>
+      <div class="account-details"><span id="signedInEmail"></span><span id="roleBadge" class="account-role"></span><span id="viewingDateLabel" class="account-date"></span></div>
+      <div id="historyControls" class="history-controls" hidden><label for="historyDate">Review date</label><input id="historyDate" type="date"></div>
+      <button id="signOutBtn" class="account-signout" type="button">Sign Out</button>
+    </div>
+    <header class="app-header">
+      <div>
+        <p class="eyebrow">Potts Point</p>
+        <h1>Cleaning Checklist</h1>
+      </div>
+      <button id="resetTodayBtn" class="secondary-btn" type="button">Reset All</button>
+    </header>
+
+    <section class="progress-card" aria-label="Daily cleaning progress">
+      <div class="progress-copy">
+        <strong id="progressText">0 of 0 completed</strong>
+        <span id="progressPercent">0%</span>
+      </div>
+      <div class="progress-track" aria-hidden="true">
+        <div id="progressBar" class="progress-bar"></div>
+      </div>
+    </section>
+
+    <nav class="top-tabs" aria-label="Checklist sections">
+      <button class="tab-btn active" type="button" data-page="shared-rooms">Rooms with Shared Bathrooms</button>
+      <button class="tab-btn" type="button" data-page="bathrooms">Common Bathrooms</button>
+      <button class="tab-btn" type="button" data-page="common-areas">Common Areas</button>
+      <button class="tab-btn" type="button" data-page="late-shift">Afternoon / Night Shift</button>
+      <button class="tab-btn" type="button" data-page="additional">Additional Tasks</button>
+      <button class="tab-btn" type="button" data-page="all-tasks">All Tasks</button>
+    </nav>
+
+    <main>
+      <section id="shared-rooms" class="page active" data-title="Rooms with Shared Bathrooms">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Page 2</p>
+            <h2>Rooms with Shared Bathrooms</h2>
+          </div>
+          <span class="section-count" data-count-for="shared-rooms"></span>
+        </div>
+        <div class="checklist" data-list="shared-rooms"></div>
+      </section>
+
+      <section id="bathrooms" class="page" data-title="Common Bathrooms">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Page 3</p>
+            <h2>Common Bathrooms</h2>
+          </div>
+          <span class="section-count" data-count-for="bathrooms"></span>
+        </div>
+        <div class="checklist grouped-list" data-list="bathrooms"></div>
+      </section>
+
+      <section id="common-areas" class="page" data-title="Common Areas">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Page 4</p>
+            <h2>Common Areas</h2>
+          </div>
+          <span class="section-count" data-count-for="common-areas"></span>
+        </div>
+        <div class="checklist" data-list="common-areas"></div>
+      </section>
+
+      <section id="late-shift" class="page" data-title="Night Shift · 6:00 PM–9:00 PM">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Shift Checklist</p>
+            <h2>Night Shift · 6:00 PM–9:00 PM</h2>
+          </div>
+          <span class="section-count" data-count-for="late-shift"></span>
+        </div>
+        <div class="share-card">
+          <div>
+            <strong>Shift-only WhatsApp list</strong>
+            <span>Copies only the tasks in this shift, including check marks, finish times and cleaner notes.</span>
+          </div>
+          <div class="share-actions">
+            <button id="copyLateShiftBtn" class="primary-btn" type="button">Copy Night Shift</button>
+          </div>
+        </div>
+        <div class="checklist grouped-list" data-list="late-shift"></div>
+      </section>
+
+      <section id="additional" class="page" data-title="Additional Tasks">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Page 5</p>
+            <h2>Additional Tasks</h2>
+          </div>
+          <span class="section-count" data-count-for="additional"></span>
+        </div>
+
+        <form id="taskForm" class="add-task-card">
+          <label for="taskInput">Add a special task</label>
+          <div class="task-input-row">
+            <input id="taskInput" type="text" maxlength="120" placeholder="Example: Deep clean Room 8" autocomplete="off" required>
+            <button class="primary-btn" type="submit">Add Task</button>
+          </div>
+        </form>
+
+        <div id="additionalTasks" class="checklist"></div>
+        <div id="emptyState" class="empty-state">
+          <strong>No additional tasks yet</strong>
+          <span>Add a special task above.</span>
+        </div>
+      </section>
+
+      <section id="all-tasks" class="page" data-title="All Tasks">
+        <div class="section-heading all-tasks-heading">
+          <div>
+            <p class="section-kicker">Overview</p>
+            <h2>All Tasks</h2>
+          </div>
+          <span class="section-count" data-count-for="all-tasks"></span>
+        </div>
+
+        <div class="share-card">
+          <div>
+            <strong>WhatsApp-ready lists</strong>
+            <span id="copyOptionsHelp">Reception can send the full checklist to cleaners or copy a report with completed and outstanding tasks.</span>
+          </div>
+          <div class="share-actions">
+            <button id="copyToCleanersBtn" class="primary-btn" type="button">Copy to Cleaners</button>
+            <button id="copyRoomsBtn" class="secondary-btn" type="button">Copy Rooms Only</button>
+            <button id="copyReportBtn" class="secondary-btn" type="button">Copy Report</button>
+          </div>
+        </div>
+
+        <pre id="whatsappPreview" class="whatsapp-preview" aria-label="WhatsApp task list preview"></pre>
+      </section>
+    </main>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../shared/config.js"></script>
+  <script src="../shared/backend.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

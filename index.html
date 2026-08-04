@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#0f766e">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <title>Property Cleaning Checklists</title>
+  <style>
+    :root{font-family:Inter,Arial,sans-serif;color:#102b2a;background:#edf5f3}*{box-sizing:border-box}body{margin:0;min-height:100vh}.shell{max-width:940px;margin:auto;padding:28px 18px 50px}.brand{margin-bottom:24px}.eyebrow{text-transform:uppercase;letter-spacing:.13em;color:#0f766e;font-size:12px;font-weight:800}.brand h1{font-size:clamp(30px,6vw,48px);margin:6px 0 8px}.muted{color:#5d7371}.panel{background:#fff;border:1px solid #cfe0dd;border-radius:22px;padding:22px;box-shadow:0 12px 35px rgba(15,118,110,.09)}.team-grid,.property-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(235px,1fr));gap:14px}.team-card{border:1px solid #cfe0dd;border-radius:18px;background:#fbfdfd;padding:20px;text-align:left;cursor:pointer;color:inherit}.team-card:hover,.team-card.active{border-color:#0f766e;box-shadow:0 0 0 2px rgba(15,118,110,.12)}.team-card strong{display:block;font-size:20px;margin-bottom:6px}.login-form{display:grid;gap:14px;margin-top:20px}.field{display:grid;gap:7px;font-weight:700}.field input{width:100%;padding:14px;border:1px solid #b9ceca;border-radius:13px;font:inherit}.btn{border:0;border-radius:13px;padding:14px 18px;font:inherit;font-weight:800;cursor:pointer}.primary{background:#0f766e;color:#fff}.secondary{background:#e8f3f1;color:#0f5d57}.error{color:#a33131;min-height:20px;margin:0}.hidden{display:none!important}.dashboard-head{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:20px}.user-meta{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.badge{background:#e6f4f1;color:#0f655e;border-radius:999px;padding:7px 10px;font-weight:800;font-size:13px}.property-card{display:block;text-decoration:none;color:inherit;background:#fff;border:1px solid #cfe0dd;border-radius:18px;padding:21px;box-shadow:0 8px 22px rgba(15,118,110,.06)}.property-card:hover{border-color:#0f766e;transform:translateY(-1px)}.property-card strong{display:block;font-size:20px;margin-bottom:6px}.cleaner-name-panel{margin:0 0 18px;padding:18px;border:1px solid #b9ceca;border-radius:16px;background:#f7fbfa}.cleaner-name-row{display:flex;gap:10px;margin-top:10px}.cleaner-name-row input{flex:1;min-width:0;padding:13px;border:1px solid #b9ceca;border-radius:12px;font:inherit}.cleaner-current{margin:8px 0 0;color:#0f655e;font-weight:800}@media(max-width:560px){.dashboard-head{align-items:flex-start;flex-direction:column}.dashboard-head .btn{width:100%}.cleaner-name-row{flex-direction:column}}
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="brand">
+      <div class="eyebrow">Azzurro Hotels</div>
+      <h1>Property Cleaning Checklists</h1>
+      <p class="muted">Reception and cleaning operations portal.</p>
+    </header>
+
+    <section id="loginPanel" class="panel">
+      <h2>Choose your team</h2>
+      <div class="team-grid">
+        <button class="team-card active" type="button" data-team="reception" data-email="reception@azzurrohotels.com">
+          <strong>Reception Team</strong><span class="muted">Full checklist access and control.</span>
+        </button>
+        <button class="team-card" type="button" data-team="cleaning" data-email="cleaning@azzurrohotels.com">
+          <strong>Cleaning Team</strong><span class="muted">Complete tasks and add cleaner updates.</span>
+        </button>
+      </div>
+      <form id="loginForm" class="login-form">
+        <label class="field">Email<input id="email" type="email" autocomplete="username" required value="reception@azzurrohotels.com"></label>
+        <label class="field">Password<input id="password" type="password" autocomplete="current-password" required></label>
+        <button id="loginButton" class="btn primary" type="submit">Sign In</button>
+        <p id="loginError" class="error" role="alert"></p>
+      </form>
+    </section>
+
+    <section id="dashboardPanel" class="hidden">
+      <div class="dashboard-head">
+        <div>
+          <h2 style="margin:0 0 8px">Select a property</h2>
+          <div class="user-meta"><span id="dashboardEmail" class="muted"></span><span id="dashboardRole" class="badge"></span></div>
+        </div>
+        <button id="signOutButton" class="btn secondary" type="button">Sign Out</button>
+      </div>
+      <section id="cleanerNamePanel" class="cleaner-name-panel hidden">
+        <strong>Who is working today?</strong>
+        <p class="muted" style="margin:6px 0 0">Enter the cleaner’s full name before opening a property checklist.</p>
+        <div class="cleaner-name-row">
+          <input id="cleanerNameInput" type="text" maxlength="100" autocomplete="name" placeholder="Cleaner name">
+          <button id="saveCleanerNameButton" class="btn primary" type="button">Continue</button>
+        </div>
+        <p id="cleanerNameError" class="error" role="alert"></p>
+        <p id="cleanerCurrent" class="cleaner-current hidden"></p>
+      </section>
+      <div id="propertyGrid" class="property-grid">
+        <a class="property-card" href="Allen-Darling-Harbour/"><strong>Allen (Darling Harbour)</strong><span class="muted">Open cleaning checklist</span></a>
+        <a class="property-card" href="Central/"><strong>Central</strong><span class="muted">Open cleaning checklist</span></a>
+        <a class="property-card" href="Potts-Point/"><strong>Potts Point</strong><span class="muted">Open cleaning checklist</span></a>
+        <a class="property-card" href="Olympic/"><strong>Olympic</strong><span class="muted">Open cleaning checklist</span></a>
+        <a class="property-card" href="Pyrmont/"><strong>Pyrmont</strong><span class="muted">Open cleaning checklist</span></a>
+      </div>
+    </section>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="shared/config.js"></script>
+  <script>
+    const client = supabase.createClient(APP_CONFIG.supabaseUrl, APP_CONFIG.supabaseAnonKey);
+    const loginPanel = document.getElementById('loginPanel');
+    const dashboardPanel = document.getElementById('dashboardPanel');
+    const emailInput = document.getElementById('email');
+    const errorBox = document.getElementById('loginError');
+    const cleanerNameKey = 'azzurro-cleaner-name';
+    const cleanerNamePanel = document.getElementById('cleanerNamePanel');
+    const propertyGrid = document.getElementById('propertyGrid');
+
+    document.querySelectorAll('.team-card').forEach(card => card.addEventListener('click', () => {
+      document.querySelectorAll('.team-card').forEach(c => c.classList.remove('active'));
+      card.classList.add('active');
+      emailInput.value = card.dataset.email;
+      document.getElementById('password').focus();
+    }));
+
+    async function showDashboard(session) {
+      const { data: profile, error } = await client.from('app_profiles').select('email,role').eq('id', session.user.id).single();
+      if (error || !profile || !['reception','cleaning'].includes(profile.role)) {
+        await client.auth.signOut();
+        errorBox.textContent = 'This account does not have checklist access.';
+        loginPanel.classList.remove('hidden');
+        dashboardPanel.classList.add('hidden');
+        return;
+      }
+      document.getElementById('dashboardEmail').textContent = profile.email || session.user.email;
+      document.getElementById('dashboardRole').textContent = profile.role === 'reception' ? 'Reception' : 'Cleaning Team';
+      loginPanel.classList.add('hidden');
+      dashboardPanel.classList.remove('hidden');
+
+      if (profile.role === 'cleaning') {
+        cleanerNamePanel.classList.remove('hidden');
+        const savedName = (sessionStorage.getItem(cleanerNameKey) || '').trim();
+        document.getElementById('cleanerNameInput').value = savedName;
+        propertyGrid.classList.toggle('hidden', !savedName);
+        const current = document.getElementById('cleanerCurrent');
+        current.textContent = savedName ? `Working as: ${savedName}` : '';
+        current.classList.toggle('hidden', !savedName);
+        if (!savedName) document.getElementById('cleanerNameInput').focus();
+      } else {
+        cleanerNamePanel.classList.add('hidden');
+        propertyGrid.classList.remove('hidden');
+      }
+
+      const returnTo = new URLSearchParams(location.search).get('returnTo');
+      const savedName = (sessionStorage.getItem(cleanerNameKey) || '').trim();
+      if (returnTo && (profile.role === 'reception' || savedName) && returnTo.startsWith('/') && !returnTo.startsWith('//')) {
+        const target = new URL(returnTo, location.origin);
+        if (target.origin === location.origin) location.replace(target.pathname + target.search);
+      }
+    }
+
+    document.getElementById('loginForm').addEventListener('submit', async event => {
+      event.preventDefault();
+      errorBox.textContent = '';
+      const button = document.getElementById('loginButton');
+      button.disabled = true; button.textContent = 'Signing in...';
+      try {
+        const { data, error } = await client.auth.signInWithPassword({
+          email: emailInput.value.trim(),
+          password: document.getElementById('password').value
+        });
+        if (error) throw error;
+        await showDashboard(data.session);
+      } catch (error) {
+        errorBox.textContent = error?.message || 'Unable to sign in. Please try again.';
+      } finally {
+        button.disabled = false;
+        button.textContent = 'Sign In';
+      }
+    });
+
+    document.getElementById('saveCleanerNameButton').addEventListener('click', () => {
+      const input = document.getElementById('cleanerNameInput');
+      const error = document.getElementById('cleanerNameError');
+      const name = input.value.trim().replace(/\s+/g, ' ').slice(0, 100);
+      if (name.length < 2) {
+        error.textContent = 'Enter the cleaner’s name.';
+        input.focus();
+        return;
+      }
+      error.textContent = '';
+      sessionStorage.setItem(cleanerNameKey, name);
+      document.getElementById('cleanerCurrent').textContent = `Working as: ${name}`;
+      document.getElementById('cleanerCurrent').classList.remove('hidden');
+      propertyGrid.classList.remove('hidden');
+      const returnTo = new URLSearchParams(location.search).get('returnTo');
+      if (returnTo && returnTo.startsWith('/') && !returnTo.startsWith('//')) {
+        const target = new URL(returnTo, location.origin);
+        if (target.origin === location.origin) location.replace(target.pathname + target.search);
+      }
+    });
+
+    document.getElementById('signOutButton').addEventListener('click', async () => { sessionStorage.removeItem(cleanerNameKey); await client.auth.signOut(); location.replace('index.html'); });
+    client.auth.getSession().then(({data}) => { if (data.session) showDashboard(data.session); });
+  </script>
+</body>
+</html>
